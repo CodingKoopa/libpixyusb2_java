@@ -1,0 +1,10 @@
+# Ignore Gradle project specific files.
+.gradle
+
+# Ignore build files.
+bin
+
+# Ignore generated configuration files and directories.
+.classpath
+.project
+.settings

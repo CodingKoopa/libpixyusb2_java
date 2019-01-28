@@ -1,0 +1,4 @@
+subprojects {
+    // Apply the JVM library plugin to all subprojects, for API support.
+    // apply plugin: "java-library"
+}

@@ -1,0 +1,20 @@
+plugins {
+    id 'cpp'
+}
+
+def javaIncludeDirectory = System.properties.'java.home' + "/include"
+
+model {
+    components {
+        main(NativeLibrarySpec) {
+            sources {
+                cpp {
+                    source {
+                        srcDir project(':libpixyusb2').generatedCppDir
+                        include javaIncludeDirectory, javaIncludeDirectory + "/win32"
+                    }
+                }
+            }
+        }
+    }
+}

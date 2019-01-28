@@ -1,0 +1,39 @@
+plugins {
+    // Apply the swig plugin, for generating bindings.
+    id 'net.tribe-seven.swig' version '0.1.1'
+}
+
+// Declare the path to the directory where generated Java wrapper source files will be placed.
+project.ext.generatedJavaDir =
+        new File(project(':libpixyusb2_java_api').buildDir,
+        '/main/java/com/charmedlabs/libpixyusb2/pixy')
+// Declare the path to the directory where generated C++ wrapper source files will be placed.
+project.ext.generatedCppDir = new File(project(':libpixyusb2_cpp_api').buildDir, '/main/cpp')
+// Declare a task for running swig.
+task swig(type: SwigTask, group: 'Build', description: 'Generates C++ to Java bindings for the \
+library.') {
+    doFirst {
+        // Make the directory for generated Java files, as the build will fail without it.
+        mkdir generatedJavaDir
+        // Make the directory for generated C++ files, as the build will fail without it.
+        mkdir generatedCppDir
+    }
+    // Enable C++ support for the interface file.
+    enableCpp true
+    // Set the name of the module, which is used for things like the interface class name.
+    module 'pixy'
+    // Set the package name, which correlates with this directory structure.
+    packageName 'com.charmedlabs.libpixyusb2.pixy'
+    // Use the common interface file.
+    source new File(project.parent.projectDir, '/../libpixyusb2_swig/pixy.i')
+    // Use the Java source file directory.
+    javaSourcesPath generatedJavaDir
+    // Use the C++ source file directory.
+    wrapperTargetFile new File(generatedCppDir, '/pixy_wrap.cpp')
+}
+
+// Have the C++ API compilation depend on the swig generation.
+tasks.getByPath(':libpixyusb2_cpp_api:build').dependsOn swig
+// Make the Java API packaging depend on the C++ API compilation.
+tasks.getByPath(':libpixyusb2_java_api:jar').dependsOn 
+        tasks.getByPath(':libpixyusb2_cpp_api:build')

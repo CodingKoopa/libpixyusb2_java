@@ -1,0 +1,57 @@
+plugins {
+    // Apply the application plugin, to make an executable demo.
+    id 'application'
+    id 'java-library'
+}
+
+configurations {
+    // Add a configuration for libpixyusb2, to use in the "jar" task.
+    libpixyusb2
+}
+
+dependencies {
+    // Declare a dependency on libpixyusb2.
+    api libpixyusb2(project(':libpixyusb2_java_api'))
+}
+
+sourceSets {
+    main {
+        java {
+            // Source the demo Java source code.
+            srcDir "src/main/java"
+        }
+    }
+}
+
+jar {
+    // Include the main demo output in the JAR.
+    // TODO: Since jar is being extended, is this needed?
+    from sourceSets.main.output
+
+    // Include the libpixyusb2 native shared object in the JAR.
+    // TODO: does this need a dependson?
+    // TODO: could this be cleanera?
+    from({ zipTree(configurations.libpixyusb2.singleFile) }) {
+        include 'libpixyusb2.*', 'libusb-1.0.*'
+    }
+}
+
+application {
+    // Configure the application plugin to use the demo class.
+    mainClassName = 'com.charmedlabs.libpixyusb2.examples.Demo'
+}
+
+build.enabled = false
+// By default, run the album demo.
+mainClassName = "com.charmedlabs.libpixy2.examples.Demo"
+
+    // Include the libpixyusb2 native shared object in the JAR.
+    from({ zipTree(configurations.libpixyusb2.singleFile) }) {
+        include 'libpixyusb2.*', 'libusb-1.0.*'
+    }
+}
+
+application {
+    // Configure the application plugin to use the demo class.
+    mainClassName = 'com.charmedlabs.libpixyusb2.examples.Demo'
+}
