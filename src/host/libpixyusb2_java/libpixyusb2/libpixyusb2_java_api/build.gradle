@@ -1,4 +1,4 @@
-plugins {
+ plugins {
     // Apply the Java library plugin, for building the Java part of the library.
     id 'java-library'
 }

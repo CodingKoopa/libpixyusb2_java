@@ -4,14 +4,14 @@ plugins {
     id 'java-library'
 }
 
-configurations {
-    // Add a configuration for libpixyusb2, to use in the "jar" task.
-    libpixyusb2
-}
+// configurations {
+//     // Add a configuration for libpixyusb2, to use in the "jar" task.
+//     libpixyusb2
+// }
 
 dependencies {
     // Declare a dependency on libpixyusb2.
-    api libpixyusb2(project(':libpixyusb2_java_api'))
+    api libpixyusb2(project(':libpixyusb2:libpixyusb2_java_api'))
 }
 
 sourceSets {
@@ -23,6 +23,7 @@ sourceSets {
     }
 }
 
+// TODOOOOOOOOOOOOO
 jar {
     // Include the main demo output in the JAR.
     // TODO: Since jar is being extended, is this needed?

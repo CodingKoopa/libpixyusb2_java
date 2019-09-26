@@ -3,15 +3,19 @@ plugins {
     id 'net.tribe-seven.swig' version '0.1.1'
 }
 
-// Declare the path to the directory where generated Java wrapper source files will be placed.
-project.ext.generatedJavaDir =
-        new File(project(':libpixyusb2_java_api').buildDir,
-        '/main/java/com/charmedlabs/libpixyusb2/pixy')
-// Declare the path to the directory where generated C++ wrapper source files will be placed.
-project.ext.generatedCppDir = new File(project(':libpixyusb2_cpp_api').buildDir, '/main/cpp')
+ext {
+    // Declare the path to the directory where generated Java wrapper source files will be placed.
+    generatedJavaDir =
+            file(project(':libpixyusb2:libpixyusb2_java_api').buildDir.getAbsolutePath() +
+            '/main/java/com/charmedlabs/libpixyusb2/pixy')
+    // Declare the path to the directory where generated C++ wrapper source files will be placed.
+    generatedCppDir = file(project(':libpixyusb2:libpixyusb2_cpp_api').buildDir.getAbsolutePath() +
+            '/main/cpp')
+}
 // Declare a task for running swig.
-task swig(type: SwigTask, group: 'Build', description: 'Generates C++ to Java bindings for the \
-library.') {
+task swig(type: SwigTask) {
+    group 'Build'
+    description 'Generates C++ to Java bindings for the library.'
     doFirst {
         // Make the directory for generated Java files, as the build will fail without it.
         mkdir generatedJavaDir
@@ -25,11 +29,11 @@ library.') {
     // Set the package name, which correlates with this directory structure.
     packageName 'com.charmedlabs.libpixyusb2.pixy'
     // Use the common interface file.
-    source new File(project.parent.projectDir, '/../libpixyusb2_swig/pixy.i')
+    source file(project.parent.projectDir.getAbsolutePath() + '/../libpixyusb2_swig/pixy.i')
     // Use the Java source file directory.
     javaSourcesPath generatedJavaDir
     // Use the C++ source file directory.
-    wrapperTargetFile new File(generatedCppDir, '/pixy_wrap.cpp')
+    wrapperTargetFile file(generatedCppDir.getAbsolutePath() + '/pixy_wrap.cpp')
 }
 
 // Have the C++ API compilation depend on the swig generation.

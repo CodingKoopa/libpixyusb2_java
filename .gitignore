@@ -11,4 +11,8 @@
 *.swo
 *.cxx
 *.class
-src/host/libpixyusb2_examples/java_demos/com/charmedlabs/libpixy2/pixy/*.java
+[Bb]uild/
+.vscode/
+.settings/
+.gradle/
+.project
