@@ -11,6 +11,7 @@
 *.swo
 *.cxx
 *.class
+.classpath
 [Bb]uild/
 .vscode/
 .settings/
