@@ -31,11 +31,12 @@ cd "$TARGET_BUILD_FOLDER/java_demos"
 
 echo "Generating C++ to Java for libpixyusb2..."
 pwd
-# cp ../../src/host/libpixyusb2_java/libpixyusb2/src/main/java/com/charmedlabs/libpixyusb2/pixy/pixy.i .
-cp ../../src/host/libpixyusb2_examples/java_demos/pixy.i .
-swig -java -c++ -outcurrentdir -package com.charmedlabs.libpixyusb2.pixy pixy.i
-# cp ./*.java ../../src/host/libpixyusb2_examples/java_demos/com/charmedlabs/libpixyusb2/pixy/
 
+cp ../../src/host/libpixyusb2_swig/pixy.i .
+swig -java -c++ -outcurrentdir -package com.charmedlabs.libpixyusb2.pixy pixy.i
+
+
+echo "Compiling and linking C++ interface for libpixyusb2..."
 # GCC_EXECUTABLE=arm-frc2019-linux-gnueabi-g++
 GCC_EXECUTABLE=g++
 GCC_INCLUDES=(
