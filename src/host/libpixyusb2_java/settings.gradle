@@ -7,5 +7,5 @@
  * in the user guide at https://docs.gradle.org/5.1.1/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'libpixyusb2_java'
-include 'libpixyusb2', 'sample', 'libpixyusb2_java_api', 'libpixyusb2_cpp_api'
+rootProject.name = 'libpixyusb2'
+include 'libpixyusb2_swig', 'libpixyusb2_java_api', 'libpixyusb2_cpp_api', 'sample'

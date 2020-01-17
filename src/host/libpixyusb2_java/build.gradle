@@ -1,6 +1,15 @@
-subprojects {
-    // Apply the JVM library plugin to all subprojects, for API support.
-    // apply plugin: "java-library"
+ext {
+    // Declare the path to the directory where generated Java wrapper source files will be placed.
+    generatedJavaDir =
+            file(project(':libpixyusb2_swig').buildDir.getAbsolutePath() +
+            '/main/java/com/charmedlabs/libpixyusb2/pixy')
+    // Declare the path to the directory where generated C++ wrapper source files will be placed.
+    generatedCppDir = file(project(':libpixyusb2_swig').buildDir.getAbsolutePath() +
+            '/main/cpp')
 }
 
-defaultTasks ':sample:build'
+// Have the C++ API depend on the swig generation.
+tasks.getByPath(':libpixyusb2_cpp_api:build').dependsOn tasks.getByPath(':libpixyusb2_swig:swig')
+// Make the Java API depend on the C++ API.
+tasks.getByPath(':libpixyusb2_java_api:build').dependsOn \
+    tasks.getByPath(':libpixyusb2_cpp_api:build')

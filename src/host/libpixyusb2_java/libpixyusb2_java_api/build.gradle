@@ -1,13 +1,14 @@
- plugins {
+plugins {
     // Apply the Java library plugin, for building the Java part of the library.
     id 'java-library'
 }
 
+// TODO: All of this.
 sourceSets {
     main {
         java {
             // Source the generated Java code.
-            srcDirs project(':libpixyusb2').generatedJavaDir
+            // srcDirs project(':libpixyusb2').generatedJavaDir
         }
     }
 }

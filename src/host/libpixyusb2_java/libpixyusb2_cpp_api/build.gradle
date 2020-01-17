@@ -1,0 +1,35 @@
+plugins {
+    id 'cpp-library'
+}
+
+def javaIncludeDirectory = System.properties.'java.home' + "/include"
+
+library {
+  source.from ( \
+      generatedCppDir, \
+      "../../libpixyusb2/src/"
+      // "../../../common/src/"
+  )
+  // source.properties.each { println "$it.key -> $it.value" }
+  binaries.whenElementFinalized { binary ->
+    privateHeaders.from(
+      "$javaIncludeDirectory",
+      "../../../common/inc/",
+      "../../libpixyusb2/include/", 
+      "../../arduino/libraries/Pixy2/"
+    )
+
+    if (binary.targetMachine.operatingSystemFamily.windows) {
+      privateHeaders.from(
+        "C:/Libraries/libusb-1.0"
+      )
+    }
+    else {
+      privateHeaders.from(
+        "$javaIncludeDirectory/linux",
+        "/usr/include/libusb-1.0"
+      )
+    }
+    privateHeaders.collect{ path -> println path }
+  }
+}

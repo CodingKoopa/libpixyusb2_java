@@ -1,0 +1,27 @@
+plugins {
+    // Apply the swig plugin, for generating bindings.
+    id 'net.tribe-seven.swig' version '0.1.1'
+}
+
+// Declare a task for running swig.
+task swig(type: SwigTask, group: 'Build', description: 'Generates C++ to Java bindings for the \
+library.') {
+    doFirst {
+        // Make the directory for generated Java files, as the build will fail without it.
+        mkdir generatedJavaDir
+        // Make the directory for generated C++ files, as the build will fail without it.
+        mkdir generatedCppDir
+    }
+    // Enable C++ support for the interface file.
+    enableCpp true
+    // Set the name of the module, which is used for things like the interface class name.
+    module 'pixy'
+    // Set the package name, which correlates with this directory structure.
+    packageName 'com.charmedlabs.libpixyusb2.pixy'
+    // Use the common interface file.
+    source file('pixy.i')
+    // Use the Java source file directory.
+    javaSourcesPath generatedJavaDir
+    // Use the C++ source file directory.
+    wrapperTargetFile file(generatedCppDir.getAbsolutePath() + '/pixy_wrap.cpp')
+}
