@@ -11,7 +11,7 @@ plugins {
 
 dependencies {
     // Declare a dependency on libpixyusb2.
-    api libpixyusb2(project(':libpixyusb2:libpixyusb2_java_api'))
+    // api libpixyusb2(project(':libpixyusb2_java_api'))
 }
 
 sourceSets {
@@ -45,12 +45,6 @@ application {
 build.enabled = false
 // By default, run the album demo.
 mainClassName = "com.charmedlabs.libpixy2.examples.Demo"
-
-    // Include the libpixyusb2 native shared object in the JAR.
-    from({ zipTree(configurations.libpixyusb2.singleFile) }) {
-        include 'libpixyusb2.*', 'libusb-1.0.*'
-    }
-}
 
 application {
     // Configure the application plugin to use the demo class.
