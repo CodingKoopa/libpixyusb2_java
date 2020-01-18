@@ -1,11 +1,9 @@
 ext {
-    // Declare the path to the directory where generated Java wrapper source files will be placed.
-    generatedJavaDir =
-            file(project(':libpixyusb2_swig').buildDir.getAbsolutePath() +
-            '/main/java/com/charmedlabs/libpixyusb2/pixy')
-    // Declare the path to the directory where generated C++ wrapper source files will be placed.
-    generatedCppDir = file(project(':libpixyusb2_swig').buildDir.getAbsolutePath() +
-            '/main/cpp')
+  // Declare the path to the directory where generated Java wrapper source files will be placed.
+  generatedJavaDir = file(project(':libpixyusb2_swig').buildDir.getAbsolutePath() +
+      '/main/java/com/charmedlabs/libpixyusb2/pixy')
+  // Declare the path to the directory where generated C++ wrapper source files will be placed.
+  generatedCppDir = file(project(':libpixyusb2_swig').buildDir.getAbsolutePath() + '/main/cpp')
 }
 
 // Have the C++ API depend on the swig generation.
