@@ -1,6 +1,8 @@
 *.exe
 *.o
+*.so
 *.d
+*.cxx
 *.mk
 *.axf
 *.map
@@ -8,8 +10,10 @@
 *.jtag
 *.swp
 *.swo
-[Bb]uild/
 .vscode/
 .settings/
 .gradle/
+build/
+bin/
 .project
+.classpath
