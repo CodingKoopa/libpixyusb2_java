@@ -8,3 +8,8 @@
 *.jtag
 *.swp
 *.swo
+[Bb]uild/
+.vscode/
+.settings/
+.gradle/
+.project
