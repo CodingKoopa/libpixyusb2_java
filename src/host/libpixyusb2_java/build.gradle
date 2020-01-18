@@ -8,6 +8,6 @@ ext {
 
 // Have the C++ API depend on the swig generation.
 tasks.getByPath(':libpixyusb2_cpp_api:build').dependsOn tasks.getByPath(':libpixyusb2_swig:swig')
-// Make the Java API depend on the C++ API.
-tasks.getByPath(':libpixyusb2_java_api:build').dependsOn \
-    tasks.getByPath(':libpixyusb2_cpp_api:build')
+// Make the Java API depend on the swig generation.
+tasks.getByPath(':libpixyusb2_java_api:compileJava').dependsOn \
+    tasks.getByPath(':libpixyusb2_swig:swig')

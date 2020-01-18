@@ -4,13 +4,12 @@ plugins {
   id 'java-library'
 }
 
-// tasks.getByPath(":libpixyusb2_cpp_api:compileDebugCpp").outputs.files.collect{file -> println file}
-tasks.getByPath(":libpixyusb2_cpp_api:linkDebug").outputs.files
-
 dependencies {
   // Declare a dependency on libpixyusb2.
   implementation project(':libpixyusb2_java_api')
 }
+
+processResources.dependsOn tasks.getByPath(':libpixyusb2_cpp_api:linkDebug')
 
 sourceSets {
   main {
