@@ -10,7 +10,6 @@ library {
       "../../libpixyusb2/src/",
       "../../../common/src/"
   )
-  // source.properties.each { println "$it.key -> $it.value" }
   binaries.whenElementFinalized { binary ->
     privateHeaders.from(
       "$javaIncludeDirectory",
@@ -30,6 +29,7 @@ library {
         "/usr/include/libusb-1.0"
       )
     }
-    privateHeaders.collect{ path -> println path }
+    logger.info(binary.name)
+    privateHeaders.collect{ file -> logger.info(file.path) }
   }
 }
