@@ -7,7 +7,7 @@ def javaIncludeDirectory = System.properties.'java.home' + "/include"
 library {
   source.from ( \
       generatedCppDir, \
-      "../../libpixyusb2/src/"
+      "../../libpixyusb2/src/",
       "../../../common/src/"
   )
   // source.properties.each { println "$it.key -> $it.value" }
