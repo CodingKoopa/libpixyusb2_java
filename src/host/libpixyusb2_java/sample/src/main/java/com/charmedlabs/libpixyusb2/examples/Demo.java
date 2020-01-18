@@ -9,8 +9,8 @@ import com.charmedlabs.libpixyusb2.examples.NativeUtils;
 class Demo {
     static {
         try {
-        NativeUtils.loadLibraryFromJar("/libusb-1.0.dll");
-        NativeUtils.loadLibraryFromJar("/libpixyusb2.dll");
+            // NativeUtils.loadLibraryFromJar("/libusb-1.0.dll");
+            NativeUtils.loadLibraryFromJar("/liblibpixyusb2_cpp_api.so");
         } catch (IOException exception) {
             System.out.println("An exception occurred while loading the libpixyusb2 shared object:");
             exception.printStackTrace();
@@ -25,6 +25,7 @@ class Demo {
         int ret = pixy.init();
         if (ret != 0) {
             System.out.println("Error: Pixy initialization failed with error code " + ret + ".");
+            return;
         }
         System.out.println("Pixy has been initialized.");
 

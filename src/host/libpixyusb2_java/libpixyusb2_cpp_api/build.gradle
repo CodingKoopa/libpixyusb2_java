@@ -4,32 +4,39 @@ plugins {
 
 def javaIncludeDirectory = System.properties.'java.home' + "/include"
 
-library {
-  source.from ( \
-      generatedCppDir, \
-      "../../libpixyusb2/src/",
-      "../../../common/src/"
+tasks.withType(CppCompile).configureEach {
+  source.from(
+    "$generatedCppDir/pixy_wrap.cpp",
+    "../../../common/src/chirp.cpp",
+    "../../libpixyusb2/src/libpixyusb2.cpp",
+    "../../libpixyusb2/src/usblink.cpp",
+    "../../libpixyusb2/src/util.cpp"
   )
-  binaries.whenElementFinalized { binary ->
-    privateHeaders.from(
-      "$javaIncludeDirectory",
-      "../../../common/inc/",
-      "../../libpixyusb2/include/", 
-      "../../arduino/libraries/Pixy2/"
-    )
+  includes.from(
+    javaIncludeDirectory,
+    "../../../common/inc/",
+    "../../libpixyusb2/include/",
+    "../../arduino/libraries/Pixy2/",
+    targetPlatform.map { targetPlatform ->
+      if (targetPlatform.operatingSystem.windows) {
+        return ["C:/Libraries/libusb-1.0"]
+      } else {
+        return [
+          "$javaIncludeDirectory/linux",
+          "/usr/include/libusb-1.0"
+        ]
+      }
+    }
+  )
+}
 
-    if (binary.targetMachine.operatingSystemFamily.windows) {
-      privateHeaders.from(
-        "C:/Libraries/libusb-1.0"
-      )
-    }
-    else {
-      privateHeaders.from(
-        "$javaIncludeDirectory/linux",
-        "/usr/include/libusb-1.0"
-      )
-    }
-    logger.info(binary.name)
-    privateHeaders.collect{ file -> logger.info(file.path) }
-  }
+tasks.withType(LinkSharedLibrary).configureEach {
+  libs.from(
+    targetPlatform.map { targetPlatform ->
+      if (targetPlatform.operatingSystem.windows) {
+        return ["C:/Libraries/libusb-1.0.dll"]
+      } else {
+        return ["/usr/lib/libusb-1.0.so"]
+      }
+  })
 }

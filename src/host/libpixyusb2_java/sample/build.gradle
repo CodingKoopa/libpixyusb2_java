@@ -4,14 +4,12 @@ plugins {
     id 'java-library'
 }
 
-// configurations {
-//     // Add a configuration for libpixyusb2, to use in the "jar" task.
-//     libpixyusb2
-// }
+// tasks.getByPath(":libpixyusb2_cpp_api:compileDebugCpp").outputs.files.collect{file -> println file}
+tasks.getByPath(":libpixyusb2_cpp_api:linkDebug").outputs.files
 
 dependencies {
     // Declare a dependency on libpixyusb2.
-    // api libpixyusb2(project(':libpixyusb2_java_api'))
+    implementation project(':libpixyusb2_java_api')
 }
 
 sourceSets {
@@ -20,20 +18,12 @@ sourceSets {
             // Source the demo Java source code.
             srcDir "src/main/java"
         }
-    }
-}
-
-// TODOOOOOOOOOOOOO
-jar {
-    // Include the main demo output in the JAR.
-    // TODO: Since jar is being extended, is this needed?
-    from sourceSets.main.output
-
-    // Include the libpixyusb2 native shared object in the JAR.
-    // TODO: does this need a dependson?
-    // TODO: could this be cleanera?
-    from({ zipTree(configurations.libpixyusb2.singleFile) }) {
-        include 'libpixyusb2.*', 'libusb-1.0.*'
+        resources {
+            // TODO: This is a hack to get the path to the shared object. For some reason, the
+            // outputs of linkDebug (but not compileDebugCpp) include the parent directory as a
+            // file, causing outputs.singleFile to throw an exception.
+            srcDir tasks.getByPath(":libpixyusb2_cpp_api:linkDebug").outputs.files.files[0]
+        }
     }
 }
 
@@ -42,7 +32,6 @@ application {
     mainClassName = 'com.charmedlabs.libpixyusb2.examples.Demo'
 }
 
-build.enabled = false
 // By default, run the album demo.
 mainClassName = "com.charmedlabs.libpixy2.examples.Demo"
 

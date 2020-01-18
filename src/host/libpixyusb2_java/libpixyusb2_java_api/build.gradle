@@ -8,7 +8,7 @@ sourceSets {
     main {
         java {
             // Source the generated Java code.
-            // srcDirs project(':libpixyusb2').generatedJavaDir
+            srcDirs generatedJavaDir
         }
     }
 }
