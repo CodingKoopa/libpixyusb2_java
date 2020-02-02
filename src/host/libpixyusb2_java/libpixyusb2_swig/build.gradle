@@ -7,6 +7,7 @@ plugins {
 task swig(type: SwigTask, group: 'Build', description: 'Generates C++ to Java bindings for the \
 library.') {
   doFirst {
+    println "Generating C++ to Java bindings."
     // Make the directory for generated Java files, as the build will fail without it.
     mkdir generatedJavaDir
     // Make the directory for generated C++ files, as the build will fail without it.

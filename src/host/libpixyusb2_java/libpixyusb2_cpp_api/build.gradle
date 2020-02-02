@@ -3,6 +3,9 @@ plugins {
 }
 
 def javaIncludeDirectory = System.properties.'java.home' + "/include"
+if (!(new File(javaIncludeDirectory)).exists())
+  javaIncludeDirectory += "/../include"
+println "Java include directory: $javaIncludeDirectory"
 
 tasks.withType(CppCompile).configureEach {
   source.from(
@@ -19,8 +22,9 @@ tasks.withType(CppCompile).configureEach {
     "../../arduino/libraries/Pixy2/",
     targetPlatform.map { targetPlatform ->
       if (targetPlatform.operatingSystem.windows) {
-        return ["C:/Libraries/libusb-1.0"]
+        println "Targeting Windows compilation."
       } else {
+        println "Targeting Unix compilation."
         return [
           "$javaIncludeDirectory/linux",
           "/usr/include/libusb-1.0"

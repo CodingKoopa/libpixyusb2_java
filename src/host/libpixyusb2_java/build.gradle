@@ -6,6 +6,9 @@ ext {
   generatedCppDir = file(project(':libpixyusb2_swig').buildDir.getAbsolutePath() + '/main/cpp')
 }
 
+println "Generated Java directory: $generatedJavaDir"
+println "Generated C++ directory: $generatedCppDir"
+
 // Have the C++ API depend on the swig generation.
 tasks.getByPath(':libpixyusb2_cpp_api:build').dependsOn tasks.getByPath(':libpixyusb2_swig:swig')
 // Make the Java API depend on the swig generation.
