@@ -23,6 +23,10 @@ tasks.withType(CppCompile).configureEach {
     targetPlatform.map { targetPlatform ->
       if (targetPlatform.operatingSystem.windows) {
         println "Targeting Windows compilation."
+        return [
+          "$javaIncludeDirectory/win32",
+          "C:/Program Files/libusb-1.0/include/libusb-1.0"
+        ]
       } else {
         println "Targeting Unix compilation."
         return [
@@ -38,7 +42,7 @@ tasks.withType(LinkSharedLibrary).configureEach {
   libs.from(
     targetPlatform.map { targetPlatform ->
       if (targetPlatform.operatingSystem.windows) {
-        return ["C:/Libraries/libusb-1.0.dll"]
+        return ["C:/Program Files/libusb-1.0/MinGW64/dll/libusb-1.0.dll.a"]
       } else {
         return ["/usr/lib/libusb-1.0.so"]
       }
