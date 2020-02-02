@@ -3,12 +3,20 @@ plugins {
     id 'java-library'
 }
 
-// TODO: All of this.
+processResources.dependsOn tasks.getByPath(':libpixyusb2_cpp_api:linkDebug')
+
 sourceSets {
-    main {
-        java {
-            // Source the generated Java code.
-            srcDirs generatedJavaDir
-        }
+  main {
+    java {
+      // Source the demo Java source code.
+      srcDirs generatedJavaDir
     }
+    resources {
+      // TODO: This is a hack to get the path to the shared object. For some reason, the
+      // outputs of linkDebug (but not compileDebugCpp) include the parent directory as a
+      // file, causing outputs.singleFile to throw an exception.
+      srcDir tasks.getByPath(":libpixyusb2_cpp_api:linkDebug").outputs.files.files[0]
+      srcDir "C:/Program Files/libusb-1.0/MinGW64/dll/"
+    }
+  }
 }

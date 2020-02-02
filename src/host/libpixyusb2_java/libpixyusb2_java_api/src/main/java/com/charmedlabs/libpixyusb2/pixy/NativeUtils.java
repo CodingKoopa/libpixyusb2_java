@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.charmedlabs.libpixyusb2.examples;
+package com.charmedlabs.libpixyusb2.pixy;
 
 import java.io.*;
 import java.nio.file.FileSystemNotFoundException;

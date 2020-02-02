@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import com.charmedlabs.libpixyusb2.pixy.*;
 
-import com.charmedlabs.libpixyusb2.examples.NativeUtils;
-
 class Demo {
     static {
         try {
